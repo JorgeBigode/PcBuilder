@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Click FPS Builder - PC Evolutivo</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="manifest"
-        href="data:application/json;base64,eyJuYW1lIjoiQ0xJQ0sgRlBTIEJVSUxERVIiLCJzaG9ydF9uYW1lIjoiRlBCdWlsZGVyIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJ0aGVtZV9jb2xvciI6IiMwZjBjMjkiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBmMGMyOSIsInN0YXJ0X3VybCI6Ii4iLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhkcFpIUm9QU0l4TlRBaUlITjBlV3hsUFNKSVpXRWlJSGc5SWpFd0lpQm9aV2xuYUhROUlqRXdJaUI0Yld4dWN6cGtZWFJoWDNkcGJtWjVlU0k2SUhSb1pXNW5hR1ZrWlNJZ1ptbHNiRDBpSXpBd01EQXdNQ0l2UGp4aElpQjNhV1IwYUQwaU1UQXdJaUJvWldsbmFIUTlJakV3SWlCMmFXVjNRbTk0UFNJd0lpQjRjMms5SWpJd0lpQjRiV3h1Y3pwNGJHbHVhejBpYzNNaUx6NDhMM04yWno0PSIsInNpemVzIjoiNTEyeDUxMiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+
+    <!-- Adicione ícones alternativos -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖥️</text></svg>">
+    <link rel="apple-touch-icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖥️</text></svg>">
     <meta name="theme-color" content="#0f0c29">
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap"
@@ -701,6 +704,10 @@
             padding: 14px 30px;
             font-size: 1.4rem;
         }
+
+        .install-button.hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -1112,7 +1119,7 @@
 
         // Função para mostrar a mensagem de salvamento
         function showAutoSaveMessage() {
-            const autoSaveElement = document.getElementById('autoSave'); // Elemento correto
+            const autoSaveElement = document.querySelector('.auto-save');
             if (autoSaveElement) {
                 autoSaveElement.classList.add('visible');
                 setTimeout(() => {
@@ -1233,15 +1240,20 @@
         resetButton.addEventListener('click', resetarJogo);
 
         // Atualização automática de FPS por segundo
+        let saveIntervalCounter = 0;
         setInterval(() => {
             fps += fpsPorSegundo;
             atualizar();
 
             // Salvar automaticamente a cada 10 segundos
-            salvarJogo();
+            saveIntervalCounter++;
+            if (saveIntervalCounter >= 10) {
+                salvarJogo();
+                saveIntervalCounter = 0;
+            }
         }, 1000);
 
-        // Inicializar o jogo
+        // Iniciar o jogo quando a página carregar
         function iniciarJogo() {
             carregarJogo();
             fpsPorSegundo = calcularFpsPorSegundo();
@@ -1250,35 +1262,103 @@
             pcLevel = calcularNivelMedio();
             atualizarImagemPC();
             atualizar();
-            salvarJogo();  // Agora a função já está declarada
-        }
-        let saveIntervalCounter = 0;
-        setInterval(() => {
-            fps += fpsPorSegundo;
-            atualizar();
-
-            // Salvar apenas a cada 10 segundos
-            saveIntervalCounter++;
-            if (saveIntervalCounter >= 10) {
-                salvarJogo();  // Função já declarada
-                saveIntervalCounter = 0;
-            }
-        }, 1000);
-
-        // Iniciar o jogo quando a página carregar
-        window.addEventListener('DOMContentLoaded', iniciarJogo);
-
-        // Salvar jogo quando a página for fechada
-        window.addEventListener('beforeunload', salvarJogo);
-
-        if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('Service Worker registrado:', reg))
-      .catch(err => console.log('Erro ao registrar o Service Worker:', err));
-  });
         }
         
+        // 2. Criar manifesto programaticamente
+        function createManifest() {
+            const manifest = {
+                "name": "CLICK FPS BUILDER",
+                "short_name": "FPBuilder",
+                "description": "Monte seu PC gamer definitivo!",
+                "start_url": ".",
+                "display": "standalone",
+                "theme_color": "#0f0c29",
+                "background_color": "#0f0c29",
+                "icons": [
+                    {
+                        "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNNDA0LjYyIDExMi42NmMtMTguMDItOC4wNS0zOC4wMi0xMi44OC01OC4yMy0xMy44My0zLjMyLTEuNTctNi45My0yLjY2LTEwLjM4LTMuOC0xOC40Mi01LjQ4LTM3LjQ0LTguOTktNTYuODEtOS41OS0yMS4yNS0uNjQtNDIuMzkgMi4zLTYyLjkgNy45LTEwLjQxIDIuODMtMjAuOTYgNi4xNS0zMS4xIDEwLjQ0LTE5Ljg0IDguMzUtMzguMjQgMTkuMDQtNTUuMjIgMzEuOTMtMTcuMzggMTMuMTEtMzMuMjMgMjguNDMtNDcuNDQgNDUuNTMtMTQuMTIgMTcuMDktMjYuODIgMzYuMDQtMzcuNTMgNTYuMTFDMTYuMDQgMjU4LjQ1IDExIDI4MC4yOCAxMC40MyAzMDIuOGMtLjU2IDIxLjYyIDIuMzggNDMuMDIgOC40NyA2My44NiA2LjI3IDIxLjI4IDE1LjYgNDEuNjIgMjcuODIgNjAuMjIgMTIuMDYgMTguMzUgMjYuNjYgMzUuMTcgNDMuNDIgNDkuNjQgMTYuOTIgMTQuNjMgMzUuODUgMjYuOTIgNTYuMDIgMzcuMDQgMTkuODQgOS45NSA0MC4zNSAxOC4xNCA2MS4zOSAyMy44NyAyMC43OSA1LjY4IDQyLjA4IDguOTYgNjMuNTIgOS41NCAyMS44Mi41OSA0My42NS0xLjY0IDY1LjA1LTYuNjUgMjEuMjItNS4wMSA0Mi4wOS0xMi42MSA2Mi4xOS0yMi4zMiAxOS44OC05LjU0IDM4LjY2LTIxLjA0IDU2LjUzLTM0LjQ3IDE3LjU1LTEzLjI0IDMzLjg1LTI4LjU0IDQ4LjY0LTQ1LjYxIDE0LjU1LTE2Ljg1IDI3LjYzLTM1LjA0IDM4Ljg2LTU0LjMxIDExLjM4LTE5LjU0IDIwLjg1LTQwLjA4IDI4LjE4LTYxLjUzIDcuMjYtMjEuMjQgMTIuMjUtNDMuMDIgMTQuOTEtNjUuMDcgMi42Mi0yMS44IDMuMDItNDMuODUgMS4xOC02NS42OS0xLjg0LTIxLjc5LTUuMzMtNDMuMzEtMTAuNTUtNjQuNTItNS4yMy0yMS4yMy0xMi4xOS00Mi4xNC0yMC43LTYyLjYxLTEwLjYtMjUuNTMtMjQuMDctNTAuMTYtNDAuMjYtNzMuMjUtMTYuMzYtMjMuMjYtMzUuMzQtNDUuMTQtNTYuNzMtNjUuMDd6IiBmaWxsPSIjZmZmIi8+PC9zdmc+",
+                        "sizes": "512x512",
+                        "type": "image/svg+xml"
+                    }
+                ]
+            };
+
+            const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+            return URL.createObjectURL(blob);
+        }
+
+        // 3. Configurar o evento de instalação
+        function setupPWAInstall() {
+            // Criar e adicionar o manifesto
+            const manifestUrl = createManifest();
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = manifestUrl;
+            document.head.appendChild(link);
+
+            let deferredPrompt;
+
+            // Evento disparado quando o PWA pode ser instalado
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                installButton.classList.remove('hidden');
+            });
+
+            // Evento de clique no botão de instalação
+            installButton.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+
+                    if (outcome === 'accepted') {
+                        installButton.textContent = '✓ Instalado!';
+                        installButton.disabled = true;
+                    }
+                    deferredPrompt = null;
+                }
+            });
+
+            // Esconder o botão se já estiver instalado
+            window.addEventListener('appinstalled', () => {
+                installButton.classList.add('hidden');
+            });
+        }
+
+        // 4. Inicializar o PWA
+        function initPWA() {
+            setupPWAInstall();
+        }
+
+        // Iniciar o jogo quando a página carregar
+        window.addEventListener('DOMContentLoaded', () => {
+            iniciarJogo();
+            initPWA();
+        });
+    </script>
+    <script>
+        // Service Worker embutido
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:application/javascript,' + encodeURIComponent(`
+                self.addEventListener('install', event => {
+                    event.waitUntil(self.skipWaiting());
+                });
+                
+                self.addEventListener('activate', event => {
+                    event.waitUntil(self.clients.claim());
+                });
+                
+                self.addEventListener('fetch', event => {
+                    // Cache-first strategy
+                    event.respondWith(
+                        caches.match(event.request)
+                            .then(response => response || fetch(event.request))
+                    );
+                });
+            `))
+            .then(reg => console.log('SW registered'))
+            .catch(err => console.error('SW error:', err));
+        }
     </script>
 </body>
 
