@@ -1,13 +1,14 @@
 self.addEventListener('install', event => {
-  console.log('[ServiceWorker] Instalando...');
-  self.skipWaiting();
+  event.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener('activate', event => {
-  console.log('[ServiceWorker] Ativado');
+  event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener('fetch', event => {
-  // Aqui você pode interceptar requisições se quiser
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => response || fetch(event.request))
+  );
 });
-
