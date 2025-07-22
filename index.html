@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Click FPS Builder - PC Evolutivo</title>
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="./manifest.json">
 
     <!-- Adicione ícones alternativos -->
     <link
@@ -1377,7 +1377,7 @@
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
-          .register("/sw.js") // <-- caminho para o arquivo sw.js
+          .register("./sw.js") // <-- caminho para o arquivo sw.js
           .then((reg) => console.log("SW registrado com sucesso:", reg))
           .catch((err) => console.error("Erro no SW:", err));
       }
