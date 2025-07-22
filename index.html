@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Click FPS Builder - PC Evolutivo</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQ0xJQ0sgRlBTIEJVSUxERVIiLCJzaG9ydF9uYW1lIjoiRlBCdWlsZGVyIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJ0aGVtZV9jb2xvciI6IiMwZjBjMjkiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBmMGMyOSIsInN0YXJ0X3VybCI6Ii4iLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhkcFpIUm9QU0l4TlRBaUlITjBlV3hsUFNKSVpXRWlJSGc5SWpFd0lpQm9aV2xuYUhROUlqRXdJaUI0Yld4dWN6cGtZWFJoWDNkcGJtWjVlU0k2SUhSb1pXNW5hR1ZrWlNJZ1ptbHNiRDBpSXpBd01EQXdNQ0l2UGp4aElpQjNhV1IwYUQwaU1UQXdJaUJvWldsbmFIUTlJakV3SWlCMmFXVjNRbTk0UFNJd0lpQjRjMms5SWpJd0lpQjRiV3h1Y3pwNGJHbHVhejBpYzNNaUx6NDhMM04yWno0PSIsInNpemVzIjoiNTEyeDUxMiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+    <meta name="theme-color" content="#0f0c29">
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap"
         rel="stylesheet">
@@ -441,6 +443,80 @@
             margin-left: 10px;
         }
 
+        .pc-level {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: #4cd137;
+            text-shadow: 0 0 10px rgba(76, 209, 55, 0.8);
+        }
+
+        /* Botões de sistema */
+        .system-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1001;
+        }
+
+        .system-button {
+            background: rgba(10, 25, 47, 0.8);
+            border: 2px solid rgba(0, 180, 219, 0.4);
+            color: #00b4db;
+            padding: 10px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .system-button:hover {
+            background: rgba(0, 180, 219, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .install-button {
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+            color: white;
+        }
+
+        .reset-button {
+            background: linear-gradient(135deg, #ff9f43, #ff6b6b);
+            color: white;
+        }
+
+        /* Salvamento automático */
+        .auto-save {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(10, 25, 47, 0.8);
+            border: 2px solid rgba(0, 180, 219, 0.4);
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: #4cd137;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .save-icon {
+            animation: pulse 2s infinite;
+        }
+
         @keyframes gradientFlow {
             0% {
                 background-position: 0% 50%;
@@ -463,25 +539,13 @@
 
             50% {
                 transform: scale(1.05);
-                filter: drop-shadow(0 0 20px rgba(0, 180, 219, 0.8));
+                filter: drop-shadow(0 0 10px rgba(0, 180, 219, 0.8));
             }
 
             100% {
                 transform: scale(1);
                 filter: drop-shadow(0 0 0 rgba(0, 180, 219, 0));
             }
-        }
-
-        .pc-level {
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            color: #4cd137;
-            text-shadow: 0 0 10px rgba(76, 209, 55, 0.8);
         }
 
         /* Responsividade */
@@ -505,6 +569,16 @@
             .pc-image {
                 width: 280px;
             }
+
+            .system-buttons {
+                top: 10px;
+                right: 10px;
+            }
+
+            .system-button {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -523,6 +597,20 @@
 
             .store-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .system-buttons {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                flex-direction: column;
+            }
+
+            .auto-save {
+                bottom: 10px;
+                left: 10px;
+                font-size: 0.8rem;
+                padding: 8px 12px;
             }
         }
 
@@ -602,6 +690,12 @@
 
 <body>
     <div class="container">
+        <!-- Botões de sistema no canto superior direito -->
+        <div class="system-buttons">
+            <button class="system-button install-button" id="installButton">Instalar App</button>
+            <button class="system-button reset-button" id="resetButton">Resetar Jogo</button>
+        </div>
+
         <header>
             <h1>🚀 CLICK FPS BUILDER</h1>
             <p class="subtitle">
@@ -647,6 +741,12 @@
                 <!-- Itens da loja serão preenchidos via JavaScript -->
             </div>
         </div>
+    </div>
+
+    <!-- Notificação de salvamento automático -->
+    <div class="auto-save">
+        <span class="save-icon">💾</span>
+        <span>Salvando automaticamente...</span>
     </div>
 
     <div class="notification" id="notification">
@@ -744,6 +844,9 @@
         const notificationContent = document.getElementById("notification-content");
         const pcImage = document.getElementById("pc-image");
         const pcLevelElement = document.getElementById("pc-level");
+        const installButton = document.getElementById("installButton");
+        const resetButton = document.getElementById("resetButton");
+        let deferredPrompt;
 
         // Função para calcular o custo do próximo nível
         function calcularCustoProximoNivel(item) {
@@ -990,22 +1093,155 @@
             atualizarPC();
         }
 
+        // Função para salvar o estado do jogo
+        function salvarJogo() {
+            const estadoJogo = {
+                fps,
+                fpsPorSegundo,
+                fpsPorClique,
+                pcLevel,
+                equipamentos: equipamentos.map(eq => eq.nivel)
+            };
+            
+            localStorage.setItem('clickFpsBuilderSave', JSON.stringify(estadoJogo));
+            
+            // Mostrar efeito visual de salvamento
+            document.querySelector('.auto-save').style.opacity = '1';
+            setTimeout(() => {
+                document.querySelector('.auto-save').style.opacity = '0.8';
+            }, 2000);
+        }
+
+        // Função para carregar o estado salvo
+        function carregarJogo() {
+            const salvo = localStorage.getItem('clickFpsBuilderSave');
+            if (salvo) {
+                try {
+                    const estado = JSON.parse(salvo);
+                    fps = estado.fps || 0;
+                    fpsPorSegundo = estado.fpsPorSegundo || 0;
+                    fpsPorClique = estado.fpsPorClique || 1;
+                    pcLevel = estado.pcLevel || 0;
+                    
+                    if (estado.equipamentos && estado.equipamentos.length === equipamentos.length) {
+                        estado.equipamentos.forEach((nivel, index) => {
+                            equipamentos[index].nivel = nivel;
+                        });
+                    }
+                    
+                    // Atualizar valores calculados
+                    fpsPorSegundo = calcularFpsPorSegundo();
+                    const novoBonus = calcularBonusClique();
+                    fpsPorClique = 1 + novoBonus;
+                    pcLevel = calcularNivelMedio();
+                    atualizarImagemPC();
+                    
+                    console.log('Jogo carregado com sucesso');
+                } catch (e) {
+                    console.error('Erro ao carregar jogo:', e);
+                    localStorage.removeItem('clickFpsBuilderSave');
+                }
+            }
+        }
+
+        // Função para resetar o jogo
+        function resetarJogo() {
+            if (confirm('Tem certeza que deseja resetar seu progresso? Isso apagará todos os seus dados de jogo.')) {
+                // Resetar variáveis
+                fps = 0;
+                fpsPorSegundo = 0;
+                fpsPorClique = 1;
+                pcLevel = 0;
+                
+                // Resetar equipamentos
+                equipamentos.forEach(item => {
+                    item.nivel = 0;
+                });
+                
+                // Remover salvamento
+                localStorage.removeItem('clickFpsBuilderSave');
+                
+                // Atualizar jogo
+                atualizar();
+                atualizarImagemPC();
+                showNotification('Jogo Resetado', 'Seu progresso foi reiniciado com sucesso!');
+            }
+        }
+
+        // Configurar evento para instalação PWA
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevenir a exibição automática do prompt
+            e.preventDefault();
+            
+            // Salvar o evento para uso posterior
+            deferredPrompt = e;
+            
+            // Mostrar o botão de instalação
+            installButton.style.display = 'block';
+        });
+
+        // Evento para instalar o app
+        installButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Mostrar o prompt de instalação
+                deferredPrompt.prompt();
+                
+                // Esperar pela decisão do usuário
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                // Verificar se o usuário aceitou
+                if (outcome === 'accepted') {
+                    console.log('Usuário aceitou a instalação');
+                    installButton.textContent = 'Instalado!';
+                    installButton.disabled = true;
+                }
+                
+                // Limpar a referência
+                deferredPrompt = null;
+            }
+        });
+
+        // Evento para resetar o jogo
+        resetButton.addEventListener('click', resetarJogo);
+
         // Atualização automática de FPS por segundo
         setInterval(() => {
             fps += fpsPorSegundo;
             atualizar();
+            
+            // Salvar automaticamente a cada 10 segundos
+            salvarJogo();
         }, 1000);
 
         // Inicializar o jogo
         function iniciarJogo() {
+            // Carregar jogo salvo
+            carregarJogo();
+            
+            // Atualizar valores calculados
             fpsPorSegundo = calcularFpsPorSegundo();
+            const novoBonus = calcularBonusClique();
+            fpsPorClique = 1 + novoBonus;
             pcLevel = calcularNivelMedio();
+            
+            // Atualizar interface
             atualizarImagemPC();
             atualizar();
+            
+            // Salvar jogo inicial
+            salvarJogo();
+            
+            // Esconder botão de instalação se já instalado
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                installButton.style.display = 'none';
+            }
         }
 
-        // Iniciar o jogo
-        iniciarJogo();
+        // Iniciar o jogo quando a página carregar
+        window.addEventListener('DOMContentLoaded', iniciarJogo);
+        
+        // Salvar jogo quando a página for fechada
+        window.addEventListener('beforeunload', salvarJogo);
     </script>
 </body>
 
